@@ -1,0 +1,8 @@
+type Query {
+  trainees: String!
+}
+type Trainee {
+  Id: ID!
+  firstName: String!
+  lastName: String!
+}
