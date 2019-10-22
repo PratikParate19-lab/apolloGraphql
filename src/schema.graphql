@@ -1,6 +1,6 @@
 type Query {
   trainees: String!
-  currentUser: User!
+  currentUser: [User]
 }
 
 type Trainee {
@@ -10,8 +10,8 @@ type Trainee {
 }
 
 type User {
-  id: ID!
-  username: String!
+  firstName: String!
+  lastName: String!
 }
 
 type Mutation {

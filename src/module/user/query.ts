@@ -1,6 +1,11 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userObject = {
+  Query: {
+    currentUser: async (_source, { id }, { dataSources }) => {
+      return dataSources.userAPI.getUserList();
+    }
+  },
   Mutation: {
     register: async (parent, { username, password }, ctx, info) => {
       const hashedPassword = await bcrypt.hash(password, 10);
