@@ -2,18 +2,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const userObject = {
   Query: {
-    currentUser: async (_source, { id }, { dataSources }) => {
+    currentUser: async (_source, {}, { dataSources }) => {
       return dataSources.userAPI.getUserList();
     }
   },
   Mutation: {
-    register: async (parent, { username, password }, ctx, info) => {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const user = await ctx.prisma.createUser({
-        username,
-        password: hashedPassword
-      });
-      return user;
+    register: async (_source, { firstName, lastName }, { dataSources }) => {
+      const data = { firstName, lastName };
+      return dataSources.userAPI.postUser(data);
+    },
+    userDelete: async (_source, { _id }, { dataSources }) => {
+      return dataSources.userAPI.userDelete(_id);
     },
     login: async (parent, { username, password }, ctx, info) => {
       const user = await ctx.prisma.user({ username });
